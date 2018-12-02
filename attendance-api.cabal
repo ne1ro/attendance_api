@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1ba2c00669fc64d10fea3595438e2a40eda2735d4f35d58fff8d5452a52638a6
+-- hash: 7e40edb7bed7ec2d18046e31e9c1d5de25a6e64f387c51f1d4e7b6905930c23d
 
 name:           attendance-api
 version:        0.1.0.0
@@ -34,6 +34,9 @@ library
       src
   build-depends:
       base >=4.7 && <5
+    , proto-lens
+    , scotty
+    , sqlite-simple
   default-language: Haskell2010
 
 executable attendance-api-exe
@@ -46,6 +49,9 @@ executable attendance-api-exe
   build-depends:
       attendance-api
     , base >=4.7 && <5
+    , proto-lens
+    , scotty
+    , sqlite-simple
   default-language: Haskell2010
 
 test-suite attendance-api-test
@@ -59,4 +65,7 @@ test-suite attendance-api-test
   build-depends:
       attendance-api
     , base >=4.7 && <5
+    , proto-lens
+    , scotty
+    , sqlite-simple
   default-language: Haskell2010
