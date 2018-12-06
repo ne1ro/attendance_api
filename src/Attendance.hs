@@ -8,18 +8,18 @@ module Attendance
 where
 
 import Attendant
+import ValidationError
 
-data ValidationError = String deriving(Show)
-
-createAttendant :: String -> String -> Attendant
+createAttendant :: String -> String -> Either ValidationError Attendant
 createAttendant firstName lastName =
-  Attendant firstName lastName
-
-deleteAttendant :: Attendant -> Attendant
-deleteAttendant a = a
+  Right $ Attendant firstName lastName
 
 listAttendants :: [Attendant]
 listAttendants = [Attendant "Test" "User"]
+
+deleteAttendant :: Attendant -> Either ValidationError Attendant
+deleteAttendant a =
+  Right $ Attendant "Test" "User"
 
 attend :: a -> a
 attend a = a

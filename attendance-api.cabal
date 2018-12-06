@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: c8a8fccefe89c62a9d60fa716cfe5cea404854738a4d11cb43b2be17bc59213e
+-- hash: 0a8dcab57e8eb68090124f34eceeb79340a50921c42b999b1efec6705a6c3c2f
 
 name:           attendance-api
 version:        0.1.0.0
@@ -30,6 +30,7 @@ library
       Attendance
       Attendant
       Lib
+      ValidationError
   other-modules:
       Paths_attendance_api
   hs-source-dirs:
