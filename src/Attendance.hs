@@ -7,14 +7,19 @@ module Attendance
   listAttendancies)
 where
 
-createAttendant :: a -> a
-createAttendant a = a
+import Attendant
 
-deleteAttendant :: a -> a
+data ValidationError = String deriving(Show)
+
+createAttendant :: String -> String -> Attendant
+createAttendant firstName lastName =
+  Attendant firstName lastName
+
+deleteAttendant :: Attendant -> Attendant
 deleteAttendant a = a
 
-listAttendants :: a -> a
-listAttendants a = a
+listAttendants :: [Attendant]
+listAttendants = [Attendant "Test" "User"]
 
 attend :: a -> a
 attend a = a
