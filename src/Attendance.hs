@@ -9,23 +9,22 @@ where
 
 import Attendant
 import ValidationError
+import qualified Domain
 
 createAttendant :: String -> String -> Either ValidationError Attendant
-createAttendant firstName lastName =
-  Right $ Attendant firstName lastName
+createAttendant = Domain.saveAttendant
 
 listAttendants :: [Attendant]
 listAttendants = [Attendant "Test" "User"]
 
 deleteAttendant :: Attendant -> Either ValidationError Attendant
-deleteAttendant a =
-  Right $ Attendant "Test" "User"
+deleteAttendant = Domain.deleteAttendant
 
-attend :: a -> a
-attend a = a
+attend :: Attendant -> DateTime -> Either ValidationError Attendant
+attend = Domain.attend
 
 hide :: a -> a
-hide a = a
+hide = Domain.hide
 
 listAttendancies :: a -> a
 listAttendancies a = a

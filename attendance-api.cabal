@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 0a8dcab57e8eb68090124f34eceeb79340a50921c42b999b1efec6705a6c3c2f
+-- hash: 1c128a93d05aa8f6ab1f0b5e3afd3ade922fc041045943ba7430bf84cc83cbad
 
 name:           attendance-api
 version:        0.1.0.0
@@ -29,6 +29,7 @@ library
   exposed-modules:
       Attendance
       Attendant
+      Domain
       Lib
       ValidationError
   other-modules:
@@ -40,6 +41,7 @@ library
     , proto-lens
     , scotty
     , sqlite-simple
+    , time
   default-language: Haskell2010
 
 executable attendance-api-exe
@@ -55,6 +57,7 @@ executable attendance-api-exe
     , proto-lens
     , scotty
     , sqlite-simple
+    , time
   default-language: Haskell2010
 
 test-suite attendance-api-test
@@ -71,4 +74,5 @@ test-suite attendance-api-test
     , proto-lens
     , scotty
     , sqlite-simple
+    , time
   default-language: Haskell2010

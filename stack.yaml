@@ -41,6 +41,7 @@ extra-deps:
   # - proto-lens-0.4.0.1
   # - scotty-0.11.2
   # - sqlite-simple-0.4.16.0
+  - time-1.8.0.4
 
 # Override default flag values for local packages and extra-deps
 # flags: {}
