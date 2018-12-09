@@ -8,6 +8,8 @@ module Attendance
 where
 
 import Attendant
+import AttendanceMark
+import Data.Time.Calendar
 import ValidationError
 import qualified Domain
 
@@ -17,13 +19,13 @@ createAttendant = Domain.saveAttendant
 listAttendants :: [Attendant]
 listAttendants = [Attendant "Test" "User"]
 
-deleteAttendant :: Attendant -> Either ValidationError Attendant
+deleteAttendant :: Attendant -> Maybe Attendant
 deleteAttendant = Domain.deleteAttendant
 
-attend :: Attendant -> DateTime -> Either ValidationError Attendant
+attend :: Attendant -> Day -> Either ValidationError AttendanceMark
 attend = Domain.attend
 
-hide :: a -> a
+hide :: AttendanceMark -> Maybe AttendanceMark
 hide = Domain.hide
 
 listAttendancies :: a -> a
