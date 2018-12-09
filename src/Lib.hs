@@ -3,6 +3,7 @@ module Lib
     ( server
     ) where
 
+import Application
 import Web.Scotty
 import Data.Monoid (mconcat)
 

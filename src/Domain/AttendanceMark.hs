@@ -1,8 +1,8 @@
-module AttendanceMark
+module Domain.AttendanceMark
   (AttendanceMark(..))
 where
 
-import Attendant
+import Domain.Attendant
 import Data.Time.Calendar
 
 data Reason = Important | NotImportant deriving (Show)

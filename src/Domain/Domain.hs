@@ -1,4 +1,4 @@
-module Domain
+module Domain.Domain
   (saveAttendant,
   deleteAttendant,
   attend,
@@ -6,8 +6,8 @@ module Domain
 where
 
 import Data.Time.Calendar
-import Attendant
-import AttendanceMark
+import Domain.Attendant
+import Domain.AttendanceMark
 import ValidationError
 
 saveAttendant :: String -> String -> Either ValidationError Attendant

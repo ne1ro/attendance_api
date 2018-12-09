@@ -1,4 +1,4 @@
-module Attendant
+module Domain.Attendant
   (Attendant(..))
 where
 

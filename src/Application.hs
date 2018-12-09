@@ -1,4 +1,4 @@
-module Attendance
+module Application
   (createAttendant,
   deleteAttendant,
   listAttendants,
@@ -7,11 +7,11 @@ module Attendance
   listAttendancies)
 where
 
-import Attendant
-import AttendanceMark
+import Domain.Attendant
+import Domain.AttendanceMark
 import Data.Time.Calendar
 import ValidationError
-import qualified Domain
+import qualified Domain.Domain as Domain
 
 createAttendant :: String -> String -> Either ValidationError Attendant
 createAttendant = Domain.saveAttendant
