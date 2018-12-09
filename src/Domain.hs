@@ -10,13 +10,13 @@ import AttendanceMark
 import ValidationError
 
 saveAttendant :: String -> String -> Either ValidationError Attendant
-saveAttendant = Right $ Attendant firstName lastName
+saveAttendant firstName lastName = Right $ Attendant firstName lastName
 
-deleteAttendant :: Attendant -> Either ValidationError Attendant
-deleteAttendant a = Right $ Attendant "Test" "User"
+deleteAttendant :: Attendant -> Maybe Attendant
+deleteAttendant a = Just a
 
-attend :: Attendant -> String -> Either ValidationError Attendant
-attend attendant date = Right $ AttendanceMark attendant date false
+attend :: Attendant -> String -> Either ValidationError AttendanceMark
+attend attendant date = Right $ AttendanceMark attendant date False
 
-hide :: AttendanceMark -> Either ValidationError AttendanceMark
-hide attendanceMark = Right $ attendanceMark
+hide :: AttendanceMark -> Maybe AttendanceMark
+hide attendanceMark = Just attendanceMark

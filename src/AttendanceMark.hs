@@ -1,5 +1,5 @@
 module AttendanceMark
-  (Attendant(..))
+  (AttendanceMark(..))
 where
 
 import Attendant
