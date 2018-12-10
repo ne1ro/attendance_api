@@ -28,5 +28,5 @@ attend = Domain.attend
 hide :: AttendanceMark -> Maybe AttendanceMark
 hide = Domain.hide
 
-listAttendancies :: a -> a
-listAttendancies a = a
+listAttendancies :: Day -> [AttendanceMark]
+listAttendancies day = []
