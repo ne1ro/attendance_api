@@ -8,10 +8,13 @@ where
 import Data.Time.Calendar
 import Domain.Attendant
 import Domain.AttendanceMark
-import ValidationError
+import Domain.ValidationError
 
 saveAttendant :: String -> String -> Either ValidationError Attendant
-saveAttendant firstName lastName = Right $ Attendant firstName lastName
+saveAttendant firstName lastName = do
+  fN <- validateName firstName
+  lN <- validateName lastName
+  Right $ Attendant fN lN
 
 deleteAttendant :: Attendant -> Maybe Attendant
 deleteAttendant = Just

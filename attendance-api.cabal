@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.31.0.
+-- This file has been generated from package.yaml by hpack version 0.31.1.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 038727c0ff57acdab6abd3e3ca5ca73bbebda4bf6ae23117314601f0b9e9b40f
+-- hash: d6af9f11f38221eb74437c2e5b983537d57b19151b31a48c42d0ea2aaa0e8701
 
 name:           attendance-api
 version:        0.1.0.0
@@ -31,8 +31,8 @@ library
       Domain.AttendanceMark
       Domain.Attendant
       Domain.Domain
+      Domain.ValidationError
       Lib
-      ValidationError
   other-modules:
       Paths_attendance_api
   hs-source-dirs:

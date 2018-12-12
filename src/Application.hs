@@ -7,10 +7,10 @@ module Application
   listAttendancies)
 where
 
-import Domain.Attendant
-import Domain.AttendanceMark
 import Data.Time.Calendar
-import ValidationError
+import Domain.AttendanceMark
+import Domain.Attendant
+import Domain.ValidationError
 import qualified Domain.Domain as Domain
 
 createAttendant :: String -> String -> Either ValidationError Attendant
