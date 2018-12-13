@@ -5,8 +5,8 @@ module Domain.AttendanceMark
   )
 where
 
+import Control.Monad.IO.Class
 import Data.Time.Calendar
-import Data.Time.Clock
 import Domain.Attendant
 import Domain.ValidationError
 
@@ -19,15 +19,7 @@ data AttendanceMark = AttendanceMark
   }
   deriving (Show, Read)
 
-validateDate :: Day -> Either ValidationError Day
-validateDate day = do
-  currentDay <- today
-  validateD day currentDay
-
-validateD :: Day -> Day -> Either ValidationError Day
-validateD day currentDay
-  | day < currentDay = Left DateIsInvalid
-  | otherwise        = Right day
-
-today :: IO Day
-today = fmap utctDay getCurrentTime
+validateDate :: Day -> Day -> Either ValidationError Day
+validateDate dayToValidate dayToCompare
+  | dayToValidate < dayToCompare = Left DateIsInvalid
+  | otherwise                    = Right dayToValidate

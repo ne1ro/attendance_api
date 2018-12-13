@@ -4,8 +4,10 @@ module Lib
     ) where
 
 import Application
-import Web.Scotty
+import Data.Time.Calendar
+import Data.Time.Clock
 import Data.Monoid (mconcat)
+import Web.Scotty
 
 server :: IO ()
 server = do
@@ -13,5 +15,6 @@ server = do
 
   scotty 3000 $ do
     get "/:word" $ do
+      today <- fmap utctDay getCurrentTime
       beam <- param "word"
       html $ mconcat ["<h1>Scotty, ", beam, " me up!</h1>"]

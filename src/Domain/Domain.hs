@@ -19,8 +19,10 @@ saveAttendant firstName lastName = do
 deleteAttendant :: Attendant -> Maybe Attendant
 deleteAttendant = Just
 
-attend :: Attendant -> Day -> Either ValidationError AttendanceMark
-attend attendant date = Right $ AttendanceMark attendant date False
+attend :: Attendant -> Day -> Day -> Either ValidationError AttendanceMark
+attend attendant date today = do
+  validDate <- validateDate date today
+  Right $ AttendanceMark attendant validDate False
 
 hide :: AttendanceMark -> Maybe AttendanceMark
 hide = Just

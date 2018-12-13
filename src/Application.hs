@@ -22,7 +22,7 @@ listAttendants = [Attendant "Test" "User"]
 deleteAttendant :: Attendant -> Maybe Attendant
 deleteAttendant = Domain.deleteAttendant
 
-attend :: Attendant -> Day -> Either ValidationError AttendanceMark
+attend :: Attendant -> Day -> Day -> Either ValidationError AttendanceMark
 attend = Domain.attend
 
 hide :: AttendanceMark -> Maybe AttendanceMark
