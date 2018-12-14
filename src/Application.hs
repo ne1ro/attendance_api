@@ -29,4 +29,5 @@ hide :: AttendanceMark -> Maybe AttendanceMark
 hide = Domain.hide
 
 listAttendancies :: Day -> [AttendanceMark]
-listAttendancies day = []
+listAttendancies day =
+  [AttendanceMark (Attendant "Test" "User") day True]

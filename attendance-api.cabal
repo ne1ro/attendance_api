@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: d6af9f11f38221eb74437c2e5b983537d57b19151b31a48c42d0ea2aaa0e8701
+-- hash: 28cf0d5297a676722a90bb532d0dfa932ed4f3c323ef24c60f1176c2d3676543
 
 name:           attendance-api
 version:        0.1.0.0
@@ -38,7 +38,8 @@ library
   hs-source-dirs:
       src
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
     , proto-lens
     , scotty
     , sqlite-simple
@@ -53,7 +54,8 @@ executable attendance-api-exe
       app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      attendance-api
+      aeson
+    , attendance-api
     , base >=4.7 && <5
     , proto-lens
     , scotty
@@ -70,7 +72,8 @@ test-suite attendance-api-test
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      attendance-api
+      aeson
+    , attendance-api
     , base >=4.7 && <5
     , proto-lens
     , scotty

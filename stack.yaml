@@ -42,6 +42,7 @@ extra-deps:
   # - scotty-0.11.2
   # - sqlite-simple-0.4.16.0
   - time-1.8.0.4
+  - aeson-1.4.2.0
 
 # Override default flag values for local packages and extra-deps
 # flags: {}

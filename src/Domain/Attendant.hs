@@ -1,3 +1,5 @@
+{-# LANGUAGE DeriveGeneric #-}
+
 module Domain.Attendant
   (
   Attendant(..),
@@ -5,9 +7,14 @@ module Domain.Attendant
   )
 where
 
+import Data.Aeson (FromJSON, ToJSON)
 import Domain.ValidationError
+import GHC.Generics
 
-data Attendant = Attendant { name :: String, lastName :: String } deriving (Show, Read)
+instance ToJSON Attendant
+instance FromJSON Attendant
+
+data Attendant = Attendant { name :: String, lastName :: String } deriving (Show, Read, Generic)
 
 validateName :: String -> Either ValidationError String
 validateName name
