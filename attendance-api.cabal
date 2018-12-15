@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 28cf0d5297a676722a90bb532d0dfa932ed4f3c323ef24c60f1176c2d3676543
+-- hash: 351843589f83a8cf8eb4ae13d80898db0e642fa249fe6af47d993ab73f2fac28
 
 name:           attendance-api
 version:        0.1.0.0
@@ -32,6 +32,7 @@ library
       Domain.Attendant
       Domain.Domain
       Domain.ValidationError
+      Infrastructure.Persistence
       Lib
   other-modules:
       Paths_attendance_api
