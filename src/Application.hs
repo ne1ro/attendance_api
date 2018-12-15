@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Application
   (createAttendant,
   deleteAttendant,
@@ -7,8 +9,9 @@ module Application
   listAttendancies)
 where
 
-import Database.SQLite.Simple
 import Data.Time.Calendar
+import Database.SQLite.Simple
+import Database.SQLite.Simple.FromRow
 import Domain.AttendanceMark
 import Domain.Attendant
 import Domain.ValidationError
@@ -18,8 +21,8 @@ import qualified Infrastructure.Persistence as Persistence
 createAttendant :: String -> String -> Either ValidationError Attendant
 createAttendant = Domain.saveAttendant
 
-listAttendants :: Connection -> [Attendant]
-listAttendants conn = [Attendant "Test" "User"]
+listAttendants :: Connection -> IO [Persistence.TestField]
+listAttendants = Persistence.listAttendants
 
 deleteAttendant :: Attendant -> Maybe Attendant
 deleteAttendant = Domain.deleteAttendant

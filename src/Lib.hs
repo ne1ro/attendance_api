@@ -7,6 +7,7 @@ module Lib
 
 import qualified Application
 import Control.Applicative
+import Control.Monad
 import Data.Monoid (mconcat)
 import Data.Time.Calendar
 import Data.Time.Clock
