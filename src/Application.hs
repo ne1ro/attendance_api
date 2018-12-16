@@ -9,18 +9,19 @@ module Application
   listAttendancies)
 where
 
-import Application.AttendantDTO
-import Data.Time.Calendar
-import Database.SQLite.Simple
-import Database.SQLite.Simple.FromRow
-import Domain.AttendanceMark
-import Domain.Attendant
-import Domain.ValidationError
-import qualified Domain.Domain as Domain
-import qualified Infrastructure.Persistence as Persistence
+import           Application.AttendantDTO
+import           Data.Time.Calendar
+import           Database.SQLite.Simple
+import           Database.SQLite.Simple.FromRow
+import           Domain.AttendanceMark
+import           Domain.Attendant
+import qualified Domain.Domain                  as Domain
+import           Domain.ValidationError
+import qualified Infrastructure.Persistence     as Persistence
 
-createAttendant :: String -> String -> Either ValidationError Attendant
-createAttendant = Domain.saveAttendant
+createAttendant :: Connection -> AttendantDTO -> IO (Either ValidationError [AttendantDTO])
+createAttendant conn body = do
+  return $ Right body
 
 listAttendants :: Connection -> IO [AttendantDTO]
 listAttendants conn = do

@@ -7,12 +7,12 @@ module Domain.AttendanceMark
   )
 where
 
-import Control.Monad.IO.Class
-import Data.Aeson (FromJSON, ToJSON)
-import Data.Time.Calendar
-import Domain.Attendant
-import Domain.ValidationError
-import GHC.Generics
+import           Control.Monad.IO.Class
+import           Data.Aeson             (FromJSON, ToJSON)
+import           Data.Time.Calendar
+import           Domain.Attendant
+import           Domain.ValidationError
+import           GHC.Generics
 
 instance ToJSON AttendanceMark
 instance FromJSON AttendanceMark
@@ -22,7 +22,7 @@ data AttendanceMark = AttendanceMark
   {
     attendant :: Attendant,
     timestamp :: Day,
-    status :: Bool
+    status    :: Bool
   }
   deriving (Show, Read, Generic)
 

@@ -7,9 +7,9 @@ module Domain.Attendant
   )
 where
 
-import Data.Aeson (FromJSON, ToJSON)
-import Domain.ValidationError
-import GHC.Generics
+import           Data.Aeson             (FromJSON, ToJSON)
+import           Domain.ValidationError
+import           GHC.Generics
 
 instance ToJSON Attendant
 instance FromJSON Attendant

@@ -4,9 +4,9 @@ module Infrastructure.Persistence
   AttendantDB(..))
 where
 
-import Control.Applicative
-import Database.SQLite.Simple
-import Database.SQLite.Simple.FromRow
+import           Control.Applicative
+import           Database.SQLite.Simple
+import           Database.SQLite.Simple.FromRow
 
 data AttendantDB = AttendantDB
   { attendantId :: Int, firstName :: String, lastName :: String }

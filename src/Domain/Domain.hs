@@ -5,10 +5,10 @@ module Domain.Domain
   hide)
 where
 
-import Data.Time.Calendar
-import Domain.Attendant
-import Domain.AttendanceMark
-import Domain.ValidationError
+import           Data.Time.Calendar
+import           Domain.AttendanceMark
+import           Domain.Attendant
+import           Domain.ValidationError
 
 saveAttendant :: String -> String -> Either ValidationError Attendant
 saveAttendant firstName lastName = do

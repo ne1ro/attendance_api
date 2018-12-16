@@ -1,4 +1,4 @@
-{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module Lib
@@ -6,14 +6,14 @@ module Lib
     ) where
 
 import qualified Application
-import Control.Applicative
-import Control.Monad
-import Control.Monad.IO.Class
-import Data.Monoid (mconcat)
-import Data.Time.Calendar
-import Data.Time.Clock
-import Database.SQLite.Simple
-import Web.Scotty
+import           Control.Applicative
+import           Control.Monad
+import           Control.Monad.IO.Class
+import           Data.Monoid            (mconcat)
+import           Data.Time.Calendar
+import           Data.Time.Clock
+import           Database.SQLite.Simple
+import           Web.Scotty
 
 server :: IO ()
 server = do
@@ -24,6 +24,11 @@ server = do
     get "/attendants" $ do
       attendants <- liftIO $ Application.listAttendants conn
       json attendants
+
+    post "/attendants" $ do
+      body <- jsonData Application.AttendantDTO
+      attendant <- liftIO $ Application.createAttendant conn body
+      json attendant
 
     -- get "/attendancies/:day" $ do
     --   day <- param "word" :: String
