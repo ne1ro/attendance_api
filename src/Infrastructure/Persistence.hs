@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Infrastructure.Persistence
   (listAttendants,
-  TestField
+  Attendant(..)
   )
 where
 
@@ -9,11 +9,12 @@ import Control.Applicative
 import Database.SQLite.Simple
 import Database.SQLite.Simple.FromRow
 
-data TestField = TestField Int String deriving (Show)
+data Attendant = Attendant
+  { attendantId :: Int, firstName :: String, lastName :: String }
+  deriving (Eq, Read, Show)
 
-instance FromRow TestField where
-  fromRow = TestField <$> field <*> field
+instance FromRow Attendant where
+  fromRow = Attendant <$> field <*> field <*> field
 
-listAttendants :: Connection -> IO [TestField]
-listAttendants conn = do
-  query_ conn "SELECT * FROM attendants" :: IO [TestField]
+listAttendants :: Connection -> IO [Attendant]
+listAttendants conn = query_ conn "SELECT * FROM attendants" :: IO [Attendant]
