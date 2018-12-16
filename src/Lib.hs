@@ -8,6 +8,7 @@ module Lib
 import qualified Application
 import Control.Applicative
 import Control.Monad
+import Control.Monad.IO.Class
 import Data.Monoid (mconcat)
 import Data.Time.Calendar
 import Data.Time.Clock
@@ -21,7 +22,8 @@ server = do
 
   scotty 3000 $ do
     get "/attendants" $ do
-      json $ Application.listAttendants conn
+      attendants <- liftIO $ Application.listAttendants conn
+      json attendants
 
     -- get "/attendancies/:day" $ do
     --   day <- param "word" :: String

@@ -9,7 +9,7 @@ module Application
   listAttendancies)
 where
 
-import qualified Application.AttendantDTO as AttendantDTO
+import Application.AttendantDTO
 import Data.Time.Calendar
 import Database.SQLite.Simple
 import Database.SQLite.Simple.FromRow
@@ -22,7 +22,7 @@ import qualified Infrastructure.Persistence as Persistence
 createAttendant :: String -> String -> Either ValidationError Attendant
 createAttendant = Domain.saveAttendant
 
-listAttendants :: Connection -> IO [AttendantDTO.AttendantDTO]
+listAttendants :: Connection -> IO [AttendantDTO]
 listAttendants conn = do
   attendants <- Persistence.listAttendants conn
   return $ map fromPersistenceToDTO attendants
@@ -40,9 +40,9 @@ listAttendancies :: Day -> [AttendanceMark]
 listAttendancies day =
   [AttendanceMark (Attendant "Test" "User") day True]
 
-fromPersistenceToDTO :: Persistence.Attendant -> AttendantDTO.AttendantDTO
+fromPersistenceToDTO :: Persistence.AttendantDB -> AttendantDTO
 fromPersistenceToDTO a =
-  AttendantDTO.AttendantDTO
-    (Persistence.Attendant.attendantId a)
-    (Persistence.Attendant.firstName a)
-    (Persistence.Attendant.lastName a)
+  AttendantDTO
+    (Persistence.attendantId a)
+    (Persistence.firstName a)
+    (Persistence.lastName a)

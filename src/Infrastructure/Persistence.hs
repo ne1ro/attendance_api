@@ -1,20 +1,19 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Infrastructure.Persistence
   (listAttendants,
-  Attendant(..)
-  )
+  AttendantDB(..))
 where
 
 import Control.Applicative
 import Database.SQLite.Simple
 import Database.SQLite.Simple.FromRow
 
-data Attendant = Attendant
+data AttendantDB = AttendantDB
   { attendantId :: Int, firstName :: String, lastName :: String }
   deriving (Eq, Read, Show)
 
-instance FromRow Attendant where
-  fromRow = Attendant <$> field <*> field <*> field
+instance FromRow AttendantDB where
+  fromRow = AttendantDB <$> field <*> field <*> field
 
-listAttendants :: Connection -> IO [Attendant]
-listAttendants conn = query_ conn "SELECT * FROM attendants" :: IO [Attendant]
+listAttendants :: Connection -> IO [AttendantDB]
+listAttendants conn = query_ conn "SELECT * FROM attendants" :: IO [AttendantDB]
