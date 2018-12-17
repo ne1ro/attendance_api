@@ -26,6 +26,7 @@ dependencies:
   - scotty
   - sqlite-simple
   - time
+  - transformers
 
 library:
   source-dirs: src

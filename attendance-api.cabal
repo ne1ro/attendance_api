@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7c547b4575ea28f4831ce37270b7695a7c0a27045e56b19b463564a76297213c
+-- hash: e09cd24d6d541ec26e0228227e6e2a21f7c27cacfa6ef9d7966d760d530e146b
 
 name:           attendance-api
 version:        0.1.0.0
@@ -46,6 +46,7 @@ library
     , scotty
     , sqlite-simple
     , time
+    , transformers
   default-language: Haskell2010
 
 executable attendance-api-exe
@@ -63,6 +64,7 @@ executable attendance-api-exe
     , scotty
     , sqlite-simple
     , time
+    , transformers
   default-language: Haskell2010
 
 test-suite attendance-api-test
@@ -81,4 +83,5 @@ test-suite attendance-api-test
     , scotty
     , sqlite-simple
     , time
+    , transformers
   default-language: Haskell2010

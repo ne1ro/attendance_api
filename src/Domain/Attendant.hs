@@ -14,7 +14,7 @@ import           GHC.Generics
 instance ToJSON Attendant
 instance FromJSON Attendant
 
-data Attendant = Attendant { name :: String, lastName :: String } deriving (Show, Read, Generic)
+data Attendant = Attendant { firstName :: String, lastName :: String } deriving (Show, Read, Generic)
 
 validateName :: String -> Either ValidationError String
 validateName name

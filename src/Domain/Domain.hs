@@ -2,7 +2,11 @@ module Domain.Domain
   (saveAttendant,
   deleteAttendant,
   attend,
-  hide)
+  hide,
+  Attendant(..),
+  AttendanceMark(..),
+  ValidationError(..)
+  )
 where
 
 import           Data.Time.Calendar

@@ -13,33 +13,42 @@ import           Application.AttendantDTO
 import           Data.Time.Calendar
 import           Database.SQLite.Simple
 import           Database.SQLite.Simple.FromRow
-import           Domain.AttendanceMark
-import           Domain.Attendant
+import Control.Monad.Trans.Except
+import Control.Monad
 import qualified Domain.Domain                  as Domain
-import           Domain.ValidationError
 import qualified Infrastructure.Persistence     as Persistence
 
-createAttendant :: Connection -> AttendantDTO -> IO (Either ValidationError [AttendantDTO])
+createAttendant :: Connection -> AttendantDTO -> IO (Either Domain.ValidationError AttendantDTO)
 createAttendant conn body = do
-  return $ Right body
+  attendant <- saveAndConvertAttendant body
+  Persistence.createAttendant conn (firstName attendant) (lastName attendant)
+  return $ Right attendant
+
+saveAndConvertAttendant :: AttendantDTO -> Either Domain.ValidationError AttendantDTO
+saveAndConvertAttendant body =
+  case Domain.saveAttendant (firstName body) (lastName body) of
+    Left err -> Left err
+    Right a -> Right $ fromDomainToDTO a
 
 listAttendants :: Connection -> IO [AttendantDTO]
 listAttendants conn = do
   attendants <- Persistence.listAttendants conn
   return $ map fromPersistenceToDTO attendants
 
-deleteAttendant :: Attendant -> Maybe Attendant
+deleteAttendant :: Domain.Attendant -> Maybe Domain.Attendant
 deleteAttendant = Domain.deleteAttendant
 
-attend :: Attendant -> Day -> Day -> Either ValidationError AttendanceMark
+attend :: Domain.Attendant -> Day -> Day -> Either Domain.ValidationError Domain.AttendanceMark
 attend = Domain.attend
 
-hide :: AttendanceMark -> Maybe AttendanceMark
+hide :: Domain.AttendanceMark -> Maybe Domain.AttendanceMark
 hide = Domain.hide
 
-listAttendancies :: Day -> [AttendanceMark]
+listAttendancies :: Day -> [Domain.AttendanceMark]
 listAttendancies day =
-  [AttendanceMark (Attendant "Test" "User") day True]
+  [Domain.AttendanceMark (Domain.Attendant "Test" "User") day True]
+
+-- Private functions
 
 fromPersistenceToDTO :: Persistence.AttendantDB -> AttendantDTO
 fromPersistenceToDTO a =
@@ -47,3 +56,9 @@ fromPersistenceToDTO a =
     (Persistence.attendantId a)
     (Persistence.firstName a)
     (Persistence.lastName a)
+
+fromDomainToDTO :: Domain.Attendant -> AttendantDTO
+fromDomainToDTO a =
+  AttendantDTO 0
+    (Domain.firstName a)
+    (Domain.lastName a)
