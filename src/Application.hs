@@ -6,7 +6,9 @@ module Application
   listAttendants,
   attend,
   hide,
-  listAttendancies)
+  listAttendancies,
+  AttendantDTO(..)
+  )
 where
 
 import           Application.AttendantDTO
@@ -19,10 +21,12 @@ import qualified Domain.Domain                  as Domain
 import qualified Infrastructure.Persistence     as Persistence
 
 createAttendant :: Connection -> AttendantDTO -> IO (Either Domain.ValidationError AttendantDTO)
-createAttendant conn body = do
-  attendant <- saveAndConvertAttendant body
-  Persistence.createAttendant conn (firstName attendant) (lastName attendant)
-  return $ Right attendant
+createAttendant conn body =
+  case saveAndConvertAttendant body of
+    Left err -> return $ Left err
+    Right attendant -> do
+      Persistence.createAttendant conn (firstName attendant) (lastName attendant)
+      return $ Right attendant
 
 saveAndConvertAttendant :: AttendantDTO -> Either Domain.ValidationError AttendantDTO
 saveAndConvertAttendant body =

@@ -13,6 +13,7 @@ import           Data.Monoid            (mconcat)
 import           Data.Time.Calendar
 import           Data.Time.Clock
 import           Database.SQLite.Simple
+import           Network.HTTP.Types.Status
 import           Web.Scotty
 
 server :: IO ()
@@ -26,16 +27,21 @@ server = do
       json attendants
 
     post "/attendants" $ do
-      body <- jsonData Application.AttendantDTO
-      attendant <- liftIO $ Application.createAttendant conn body
-      json attendant
+      body <- jsonData
+      case liftIO $ Application.createAttendant conn body of
+        Left err -> json "validation error"
+        Right attendant -> json attendant
+
+    defaultHandler $ \str -> do
+      status status500
+      json str
 
     -- get "/attendancies/:day" $ do
     --   day <- param "word" :: String
+      -- today <- fmap utctDay getCurrentTime
     --   json $ Application.listAttendancies day
 
     -- get "/:word" $ do
-      -- today <- fmap utctDay getCurrentTime
       -- beam <- param "word"
       -- html $ mconcat ["<h1>Scotty, ", beam, " me up!</h1>"]
 
