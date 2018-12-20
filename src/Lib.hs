@@ -27,7 +27,7 @@ router conn = do
     json attendants
 
   post "/attendants" $ do
-    body <- jsonData
+    body <- jsonData :: ActionM Application.AttendantDTO
     result <- liftIO $ Application.createAttendant conn body
     case result of
       Left err -> json $ object ["message" .= validationError]
