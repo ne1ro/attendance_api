@@ -9,7 +9,6 @@ import qualified Application
 import           Control.Applicative
 import           Control.Monad
 import           Control.Monad.IO.Class
-import           Data.Monoid            (mconcat)
 import Data.Aeson (object, (.=))
 import           Data.Time.Calendar
 import           Data.Time.Clock
@@ -33,6 +32,11 @@ router conn = do
       Left err -> json $ object ["message" .= validationError]
       Right attendant -> json attendant
 
+  delete "/attendants/:id" $ do
+    id <- param "id" :: String
+    liftIO $ Application.deleteAttendant conn id
+    status status204
+
   defaultHandler $ \str -> do
     status status500
     json str
@@ -41,10 +45,6 @@ router conn = do
   --   day <- param "word" :: String
     -- today <- fmap utctDay getCurrentTime
   --   json $ Application.listAttendancies day
-
-  -- get "/:word" $ do
-    -- beam <- param "word"
-    -- html $ mconcat ["<h1>Scotty, ", beam, " me up!</h1>"]
 
 server :: IO ()
 server = do
