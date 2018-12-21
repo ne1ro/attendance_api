@@ -44,7 +44,7 @@ attend = Domain.attend
 hide :: Domain.AttendanceMark -> Maybe Domain.AttendanceMark
 hide = Domain.hide
 
-listAttendancies :: Connection -> String -> IO [AttendantDTO]
+listAttendancies :: Connection -> Day -> IO [AttendantDTO]
 listAttendancies conn day = do
   attendants <- Persistence.listAttendants conn
   return $ map fromPersistenceToDTO attendants

@@ -15,6 +15,8 @@ import           Database.SQLite.Simple
 import           Network.HTTP.Types.Status
 import           Web.Scotty
 
+instance Parsable Day where parseParam = readEither
+
 validationError :: String
 validationError = "Validation Error"
 
@@ -37,7 +39,7 @@ router conn = do
     status status204
 
   get "/attendancies/:day" $ do
-    day <- param "day" :: ActionM String
+    day <- param "day" :: ActionM Day
     attendants <- liftIO $ Application.listAttendancies conn day
     json attendants
 
