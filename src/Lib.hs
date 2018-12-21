@@ -11,7 +11,6 @@ import           Control.Monad
 import           Control.Monad.IO.Class
 import Data.Aeson (object, (.=))
 import           Data.Time.Calendar
-import           Data.Time.Clock
 import           Database.SQLite.Simple
 import           Network.HTTP.Types.Status
 import           Web.Scotty
@@ -37,14 +36,14 @@ router conn = do
     liftIO $ Application.deleteAttendant conn attendantId
     status status204
 
+  get "/attendancies/:day" $ do
+    day <- param "day" :: ActionM String
+    attendants <- liftIO $ Application.listAttendancies conn day
+    json attendants
+
   defaultHandler $ \str -> do
     status status500
     json str
-
-  -- get "/attendancies/:day" $ do
-  --   day <- param "word" :: String
-    -- today <- fmap utctDay getCurrentTime
-  --   json $ Application.listAttendancies day
 
 server :: IO ()
 server = do

@@ -12,11 +12,13 @@ module Application
 where
 
 import           Application.AttendantDTO
+import           Control.Monad.IO.Class
 import           Data.Time.Calendar
+import           Data.Time.Clock
 import           Database.SQLite.Simple
 import           Database.SQLite.Simple.FromRow
-import Control.Monad.Trans.Except
 import Control.Monad
+import Control.Monad.Trans.Except
 import qualified Domain.Domain                  as Domain
 import qualified Infrastructure.Persistence     as Persistence
 
@@ -42,9 +44,10 @@ attend = Domain.attend
 hide :: Domain.AttendanceMark -> Maybe Domain.AttendanceMark
 hide = Domain.hide
 
-listAttendancies :: Day -> [Domain.AttendanceMark]
-listAttendancies day =
-  [Domain.AttendanceMark (Domain.Attendant "Test" "User") day True]
+listAttendancies :: Connection -> String -> IO [AttendantDTO]
+listAttendancies conn day = do
+  attendants <- Persistence.listAttendants conn
+  return $ map fromPersistenceToDTO attendants
 
 -- Private functions
 
