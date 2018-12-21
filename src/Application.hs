@@ -12,15 +12,15 @@ module Application
   )
 where
 
-import           Application.AttendantDTO
 import           Application.AttendanceDTO
+import           Application.AttendantDTO
+import           Control.Monad
 import           Control.Monad.IO.Class
+import           Control.Monad.Trans.Except
 import           Data.Time.Calendar
 import           Data.Time.Clock
 import           Database.SQLite.Simple
 import           Database.SQLite.Simple.FromRow
-import Control.Monad
-import Control.Monad.Trans.Except
 import qualified Domain.Domain                  as Domain
 import qualified Infrastructure.Persistence     as Persistence
 
@@ -57,7 +57,7 @@ saveAndConvertAttendant :: AttendantDTO -> Either Domain.ValidationError Attenda
 saveAndConvertAttendant body =
   case Domain.saveAttendant (firstName body) (lastName body) of
     Left err -> Left err
-    Right a -> Right $ fromDomainToDTO a
+    Right a  -> Right $ fromDomainToDTO a
 
 fromPersistenceToDTO :: Persistence.AttendantDB -> AttendantDTO
 fromPersistenceToDTO a =

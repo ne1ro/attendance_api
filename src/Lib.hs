@@ -9,7 +9,7 @@ import qualified Application
 import           Control.Applicative
 import           Control.Monad
 import           Control.Monad.IO.Class
-import Data.Aeson (object, (.=))
+import           Data.Aeson                (object, (.=))
 import           Data.Time.Calendar
 import           Database.SQLite.Simple
 import           Network.HTTP.Types.Status
@@ -30,7 +30,7 @@ router conn = do
     body <- jsonData :: ActionM Application.AttendantDTO
     result <- liftIO $ Application.createAttendant conn body
     case result of
-      Left err -> json $ object ["message" .= validationError]
+      Left err        -> json $ object ["message" .= validationError]
       Right attendant -> json attendant
 
   delete "/attendants/:id" $ do
