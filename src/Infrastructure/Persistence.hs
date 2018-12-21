@@ -7,6 +7,7 @@ module Infrastructure.Persistence
 where
 
 import           Control.Applicative
+import           Data.Time.Calendar
 import           Database.SQLite.Simple
 import           Database.SQLite.Simple.FromRow
 
@@ -22,6 +23,10 @@ instance ToRow AttendantDB where
 
 listAttendants :: Connection -> IO [AttendantDB]
 listAttendants conn = query_ conn "SELECT * FROM attendants" :: IO [AttendantDB]
+
+listAttendanciesByDay :: Connection -> Day -> IO [AttendantDB]
+listAttendanciesByDay conn day =
+  query_ conn "SELECT * FROM attendancies WHERE day >= ?" (Only (day :: Day)) :: IO [AttendantDB]
 
 createAttendant :: Connection -> String -> String -> IO ()
 createAttendant conn firstName lastName =
