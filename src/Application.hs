@@ -7,11 +7,13 @@ module Application
   attend,
   hide,
   listAttendancies,
-  AttendantDTO(..)
+  AttendantDTO(..),
+  AttendanceDTO(..)
   )
 where
 
 import           Application.AttendantDTO
+import           Application.AttendanceDTO
 import           Control.Monad.IO.Class
 import           Data.Time.Calendar
 import           Data.Time.Clock
@@ -38,16 +40,16 @@ listAttendants conn = do
 deleteAttendant :: Connection -> Int -> IO ()
 deleteAttendant = Persistence.deleteAttendant
 
+listAttendancies :: Connection -> Day -> IO [AttendanceDTO]
+listAttendancies conn day = do
+  attendancies <- Persistence.listAttendanciesByDay conn day
+  return $ map fromPersistenceToDTO attendancies
+
 attend :: Domain.Attendant -> Day -> Day -> Either Domain.ValidationError Domain.AttendanceMark
 attend = Domain.attend
 
 hide :: Domain.AttendanceMark -> Maybe Domain.AttendanceMark
 hide = Domain.hide
-
-listAttendancies :: Connection -> Day -> IO [AttendantDTO]
-listAttendancies conn day = do
-  attendants <- Persistence.listAttendants conn
-  return $ map fromPersistenceToDTO attendants
 
 -- Private functions
 

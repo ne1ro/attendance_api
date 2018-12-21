@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: c5e38487504bdd9ed39ff36609ba46edf2a26e037716cd614743845181079ea8
+-- hash: f9671ad31d842b49ce3b40098e6b40b8084a353084c7503132c255bf0a5b7eae
 
 name:           attendance-api
 version:        0.1.0.0
@@ -28,6 +28,7 @@ source-repository head
 library
   exposed-modules:
       Application
+      Application.AttendanceDTO
       Application.AttendantDTO
       Domain.AttendanceMark
       Domain.Attendant
