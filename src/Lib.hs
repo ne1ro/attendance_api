@@ -33,8 +33,8 @@ router conn = do
       Right attendant -> json attendant
 
   delete "/attendants/:id" $ do
-    id <- param "id" :: String
-    liftIO $ Application.deleteAttendant conn id
+    attendantId <- param "id" :: ActionM Int
+    liftIO $ Application.deleteAttendant conn attendantId
     status status204
 
   defaultHandler $ \str -> do

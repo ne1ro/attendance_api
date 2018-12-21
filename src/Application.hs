@@ -28,19 +28,13 @@ createAttendant conn body =
       Persistence.createAttendant conn (firstName attendant) (lastName attendant)
       return $ Right attendant
 
-saveAndConvertAttendant :: AttendantDTO -> Either Domain.ValidationError AttendantDTO
-saveAndConvertAttendant body =
-  case Domain.saveAttendant (firstName body) (lastName body) of
-    Left err -> Left err
-    Right a -> Right $ fromDomainToDTO a
-
 listAttendants :: Connection -> IO [AttendantDTO]
 listAttendants conn = do
   attendants <- Persistence.listAttendants conn
   return $ map fromPersistenceToDTO attendants
 
-deleteAttendant :: Domain.Attendant -> Maybe Domain.Attendant
-deleteAttendant = Domain.deleteAttendant
+deleteAttendant :: Connection -> Int -> IO ()
+deleteAttendant = Persistence.deleteAttendant
 
 attend :: Domain.Attendant -> Day -> Day -> Either Domain.ValidationError Domain.AttendanceMark
 attend = Domain.attend
@@ -53,6 +47,12 @@ listAttendancies day =
   [Domain.AttendanceMark (Domain.Attendant "Test" "User") day True]
 
 -- Private functions
+
+saveAndConvertAttendant :: AttendantDTO -> Either Domain.ValidationError AttendantDTO
+saveAndConvertAttendant body =
+  case Domain.saveAttendant (firstName body) (lastName body) of
+    Left err -> Left err
+    Right a -> Right $ fromDomainToDTO a
 
 fromPersistenceToDTO :: Persistence.AttendantDB -> AttendantDTO
 fromPersistenceToDTO a =
