@@ -5,6 +5,7 @@ module Application
   attend,
   hide,
   listAttendancies,
+  listAttendanciesDays,
   AttendantDTO(..),
   AttendanceDTO(..)
   )
@@ -42,6 +43,9 @@ listAttendancies :: Connection -> Day -> IO [AttendanceDTO]
 listAttendancies conn day = do
   attendancies <- Persistence.listAttendanciesByDay conn day
   return $ map fromAttendanceDbToDTO attendancies
+
+listAttendanciesDays :: Connection -> IO [String]
+listAttendanciesDays = Persistence.listAttendanciesDays
 
 attend :: Domain.Attendant -> Day -> Day -> Either Domain.ValidationError Domain.AttendanceMark
 attend = Domain.attend

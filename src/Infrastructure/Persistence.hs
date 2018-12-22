@@ -4,12 +4,14 @@ module Infrastructure.Persistence
   createAttendant,
   deleteAttendant,
   listAttendanciesByDay,
+  listAttendanciesDays,
   AttendantDB(..),
   AttendanceDB(..))
 where
 
 import           Control.Applicative
 import           Data.Time.Calendar
+import           Data.Time.Format
 import           Database.SQLite.Simple
 import           Database.SQLite.Simple.FromRow
 
@@ -20,6 +22,9 @@ data AttendantDB = AttendantDB
 data AttendanceDB = AttendanceDB
   { atId :: Int, aFirstName :: String, aLastName :: String, status :: Bool}
   deriving (Eq, Read, Show)
+
+instance FromRow Day where
+  fromRow = formatTime $ defaultTimeLocale "%B" <$> field
 
 instance FromRow AttendantDB where
   fromRow = AttendantDB <$> field <*> field <*> field
@@ -54,3 +59,6 @@ listAttendanciesByDay conn day =
     "SELECT attendants.id AS attendantID, attendants.firstName, attendants.lastName, CASE status WHEN 1 THEN 1 ELSE 0 END status FROM attendants LEFT JOIN attendancies ON attendants.id = attendancies.attendantId AND attendancies.day = ? AND attendancies.status = 1"
     [day]
 
+listAttendanciesDays :: Connection -> IO [String]
+listAttendanciesDays conn =
+  query_ conn "SELECT DISTINCT day from attendancies"
