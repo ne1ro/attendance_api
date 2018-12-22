@@ -43,7 +43,7 @@ deleteAttendant = Persistence.deleteAttendant
 listAttendancies :: Connection -> Day -> IO [AttendanceDTO]
 listAttendancies conn day = do
   attendancies <- Persistence.listAttendanciesByDay conn day
-  return $ map fromPersistenceToDTO attendancies
+  return $ map fromAttendanceDbToDTO attendancies
 
 attend :: Domain.Attendant -> Day -> Day -> Either Domain.ValidationError Domain.AttendanceMark
 attend = Domain.attend
@@ -71,3 +71,11 @@ fromDomainToDTO a =
   AttendantDTO 0
     (Domain.firstName a)
     (Domain.lastName a)
+
+fromAttendanceDbToDTO :: Persistence.AttendantDB -> AttendanceDTO
+fromAttendanceDbToDTO a =
+  AttendanceDTO
+    (Persistence.aFirstName a)
+    (Persistence.aLastName a)
+    (Persistence.status a)
+    (Persistence.day a)
