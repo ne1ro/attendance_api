@@ -26,11 +26,14 @@ listAttendants conn = query_ conn "SELECT * FROM attendants" :: IO [AttendantDB]
 
 listAttendanciesByDay :: Connection -> Day -> IO [AttendantDB]
 listAttendanciesByDay conn day =
-  query_ conn "SELECT * FROM attendancies WHERE day >= ?" (Only (day :: Day)) :: IO [AttendantDB]
+  query conn "SELECT * FROM attendancies WHERE day >= ?" [day]
 
 createAttendant :: Connection -> String -> String -> IO ()
 createAttendant conn firstName lastName =
-  execute conn "INSERT INTO attendants (firstName, lastName) VALUES (?, ?)" (AttendantDB 0 firstName lastName)
+  execute
+    conn
+    "INSERT INTO attendants (firstName, lastName) VALUES (?, ?)"
+    (AttendantDB 0 firstName lastName)
 
 deleteAttendant :: Connection -> Int -> IO ()
 deleteAttendant conn attendantId =
