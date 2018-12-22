@@ -43,6 +43,10 @@ router conn = do
     attendants <- liftIO $ Application.listAttendancies conn day
     json attendants
 
+  get "/attendancies" $ do
+    days <- liftIO $ Application.listAttendanciesDays conn
+    json days
+
   defaultHandler $ \str -> do
     status status500
     json str

@@ -14,6 +14,7 @@ import           Data.Time.Calendar
 import           Data.Time.Format
 import           Database.SQLite.Simple
 import           Database.SQLite.Simple.FromRow
+import           Database.SQLite.Simple.Time
 
 data AttendantDB = AttendantDB
   { attendantId :: Int, firstName :: String, lastName :: String }
@@ -24,7 +25,7 @@ data AttendanceDB = AttendanceDB
   deriving (Eq, Read, Show)
 
 instance FromRow Day where
-  fromRow = formatTime $ defaultTimeLocale "%B" <$> field
+  fromRow = parseTimeM True defaultTimeLocale "%Y-%-m-%-d" "2010-3-04"
 
 instance FromRow AttendantDB where
   fromRow = AttendantDB <$> field <*> field <*> field
@@ -59,6 +60,6 @@ listAttendanciesByDay conn day =
     "SELECT attendants.id AS attendantID, attendants.firstName, attendants.lastName, CASE status WHEN 1 THEN 1 ELSE 0 END status FROM attendants LEFT JOIN attendancies ON attendants.id = attendancies.attendantId AND attendancies.day = ? AND attendancies.status = 1"
     [day]
 
-listAttendanciesDays :: Connection -> IO [String]
+listAttendanciesDays :: Connection -> IO [Day]
 listAttendanciesDays conn =
   query_ conn "SELECT DISTINCT day from attendancies"

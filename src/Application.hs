@@ -44,7 +44,7 @@ listAttendancies conn day = do
   attendancies <- Persistence.listAttendanciesByDay conn day
   return $ map fromAttendanceDbToDTO attendancies
 
-listAttendanciesDays :: Connection -> IO [String]
+listAttendanciesDays :: Connection -> IO [Day]
 listAttendanciesDays = Persistence.listAttendanciesDays
 
 attend :: Domain.Attendant -> Day -> Day -> Either Domain.ValidationError Domain.AttendanceMark
