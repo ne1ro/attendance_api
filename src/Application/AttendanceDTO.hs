@@ -7,7 +7,7 @@ import           Data.Aeson               (FromJSON, ToJSON)
 import           Data.Time.Calendar
 import           GHC.Generics
 
-data AttendanceDTO = AttendanceDTO { aFirstName :: String, aLastName :: String, status :: Bool, day :: Day } deriving (Show, Read, Generic)
+data AttendanceDTO = AttendanceDTO { aFirstName :: String, aLastName :: String, status :: Bool } deriving (Show, Read, Generic)
 
 instance ToJSON AttendanceDTO
 instance FromJSON AttendanceDTO

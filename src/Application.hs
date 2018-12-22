@@ -1,5 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module Application
   (createAttendant,
   deleteAttendant,
@@ -72,10 +70,9 @@ fromDomainToDTO a =
     (Domain.firstName a)
     (Domain.lastName a)
 
-fromAttendanceDbToDTO :: Persistence.AttendantDB -> AttendanceDTO
+fromAttendanceDbToDTO :: Persistence.AttendanceDB -> AttendanceDTO
 fromAttendanceDbToDTO a =
   AttendanceDTO
     (Persistence.aFirstName a)
     (Persistence.aLastName a)
     (Persistence.status a)
-    (Persistence.day a)

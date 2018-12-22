@@ -18,20 +18,20 @@ data AttendantDB = AttendantDB
   deriving (Eq, Read, Show)
 
 data AttendanceDB = AttendanceDB
-  { atId :: String, aFirstName :: String, aLastName :: String, status :: Bool, day :: Day }
+  { atId :: Int, aFirstName :: String, aLastName :: String, status :: Bool}
   deriving (Eq, Read, Show)
 
 instance FromRow AttendantDB where
   fromRow = AttendantDB <$> field <*> field <*> field
 
 instance FromRow AttendanceDB where
-  fromRow = AttendanceDB <$> field <*> field <*> field <*> field <*> field
+  fromRow = AttendanceDB <$> field <*> field <*> field <*> field
 
 instance ToRow AttendantDB where
   toRow (AttendantDB _aId aName aLastName) = toRow (aName, aLastName)
 
 instance ToRow AttendanceDB where
-  toRow (AttendanceDB attId _aFirstName _aLastName status day) = toRow (attId, status, day)
+  toRow (AttendanceDB attId _aFirstName _aLastName status) = toRow (attId, status)
 
 listAttendants :: Connection -> IO [AttendantDB]
 listAttendants conn = query_ conn "SELECT * FROM attendants" :: IO [AttendantDB]
@@ -51,6 +51,6 @@ listAttendanciesByDay :: Connection -> Day -> IO [AttendanceDB]
 listAttendanciesByDay conn day =
   query
     conn
-    "SELECT attendants.id AS attendantID, firstName, lastName, attendancies.status, attendancies.day FROM attendants LEFT JOIN attendancies ON attendants.id = attendancies.attendantId AND attendancies.day = ?"
+    "SELECT attendants.id AS attendantID, attendants.firstName, attendants.lastName, CASE status WHEN 1 THEN 1 ELSE 0 END status FROM attendants LEFT JOIN attendancies ON attendants.id = attendancies.attendantId AND attendancies.day = ? AND attendancies.status = 1"
     [day]
 
